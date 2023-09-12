@@ -14,6 +14,9 @@ const userSchema = new Schema({
       type: String,
       required: true
     },
+    userAge: {
+      type: Number,
+    },
     userPhoneNumber : {
       type: String,
       required: true

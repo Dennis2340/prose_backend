@@ -7,11 +7,6 @@ const corsOption = require("./config/corsOption")
 const port = process.env.PORT || 3600; // fixed typo and made it dynamic
 const multer = require("multer")
 const connectDB = require("./config/mongodb")
-const poemController = require("./Controller/peomController")
-const videoController = require("./Controller/videoController")
-const storyController = require("./Controller/storyController")
-const articleController = require("./Controller/articleController")
-const motMessageController = require("./Controller/motMessageController")
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 const userController = require("./Controller/userController")
@@ -22,7 +17,8 @@ const  poemrouter  = require("./Routes/peomRoute")
 const motmsgrouter = require("./Routes/motMessageRoute")
 const storyrouter = require("./Routes/storyRoute")
 const articlerouter = require("./Routes/articleRoute")
-const videorouter = require("./Routes/videoRoute")
+const videorouter = require("./Routes/videoRoute");
+const router = require("./Routes/userRoute");
 // connects to mongodb 
 connectDB()
 
@@ -53,11 +49,7 @@ app.get("/user/userImage/:mainUrl", (req,res) => {
 
 ///////// This is the user Routes and RestApi //////////////////
 
-app.get("/user/getUserInfo", userController.getUserInfo)
-app.post("/user/register",upload.single("picture"), handleHeaderError,userController.addNewUser)
-app.post("/user/login", userController.login)
-app.put("/user/updateUser/:id", userController.updateUser)
-app.delete("/user/deleteUser/:id", userController.deleteUser)
+app.use("/user", router)
 ///////// This is the poem Routes and RestApi //////////////////
 
 app.use("/poem", poemrouter)

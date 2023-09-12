@@ -38,6 +38,7 @@ const addNewUser= async(req, res) => {
            userEmail: req.body.userEmail,
            userPhoneNumber: req.body.userPhoneNumber,
            userDescription : req.body.userDescription,
+           userAge: req.body.userAge,
            userPassword: passwordHashed,
            pictureUrl : url
         });
