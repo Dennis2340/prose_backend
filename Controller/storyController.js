@@ -29,7 +29,7 @@ const addNewStory = async(req, res) => {
         });
        
         console.log("new story added");
-        return res.status(201).json(result);
+        return res.status(201).json({result, message: "new story added"});
     } catch(error){
         console.log(error);
         return res.status(500).json({message : "Internal Server Error"});
@@ -69,7 +69,7 @@ const getAllStories =  async (req, res) => {
       updatedAt: format(new Date(), "MMMM-dd',' yyyy hh:mm aaa")
     }, { new: true });
 
-    res.status(200).json({ updatedStory });
+    res.status(202).json({ updatedStory });
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Server Error" });
@@ -81,7 +81,7 @@ const getAllStories =  async (req, res) => {
     try {
       const deletedStory = await stories.findByIdAndDelete(req.params.id);
       if (deletedStory) {
-        res.status(200).json({ message: "Story deleted" });
+        res.status(203).json({ message: "Story deleted" });
       } else {
         res.status(404).json({ message: "Story not found" });
       }

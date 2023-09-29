@@ -8,18 +8,7 @@ const addNewPoem = async(req, res) => {
         return res.status(400).json({message : "Poem title, poem genre, poem author and poem details are required"});
     }
     try{
-        const isDuplicate = await poem.exists({  
-            poemTitle: req.body.poemTitle ,
-            poemGenre: req.body.poemGenre ,
-            poemDetails: req.body.poemDetails,
-            poemAuthor : req.body.poemAuthor
-          });
-      
-          if (isDuplicate) {
-            return res
-              .status(400)
-              .json({ message: "Poem title, genre or details already exist" });
-          }
+        
         const result = await poem.create({
             poemTitle: req.body.poemTitle,
             poemGenre: req.body.poemGenre,
@@ -29,7 +18,7 @@ const addNewPoem = async(req, res) => {
         });
        
         console.log("new poem added");
-        return res.status(201).json(result);
+        return res.status(201).json({result, message: "new poem added"});
     } catch(error){
         console.log(error);
         return res.status(500).json({message : "Internal Server Error"});
@@ -38,7 +27,14 @@ const addNewPoem = async(req, res) => {
 
 const getAllPoems =  async (req, res) => {
     try {
-      const poems = await poem.find({});
+      // const { page = 1, limit = 10 } = req.query;
+
+      //   const options = {
+      //    page: parseInt(page, 10),
+      //    limit: parseInt(limit, 10),
+      // };
+
+      const poems = await poem.find({})
       return res.status(200).json({ poems });
     } catch (error) {
       console.error(error);
@@ -69,7 +65,7 @@ const getAllPoems =  async (req, res) => {
       updatedAt: format(new Date(), "MMMM-dd',' yyyy hh:mm aaa")
     }, { new: true });
 
-    res.status(200).json({ updatedPoem });
+    res.status(202).json({ updatedPoem, message: "updated succesfully" });
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Server Error" });
@@ -81,7 +77,7 @@ const getAllPoems =  async (req, res) => {
     try {
       const deletedPoem = await poem.findByIdAndDelete(req.params.id);
       if (deletedPoem) {
-        res.status(200).json({ message: "Poem deleted" });
+        res.status(203).json({ message: "Poem deleted" });
       } else {
         res.status(404).json({ message: "Poem not found" });
       }

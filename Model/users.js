@@ -14,20 +14,23 @@ const userSchema = new Schema({
       type: String,
       required: true
     },
-    userAge: {
-      type: Number,
+    userDateOfBirth: {
+      type: String,
     },
     userPhoneNumber : {
       type: String,
       required: true
     },
-    userDescription: {
+    userOccupation: {
       type: String,
-      required: true
+      
     },
     pictureUrl: {
       type: String,
-      required: true
+      
+    },
+    userGender: {
+      type: String,
     }
    
 

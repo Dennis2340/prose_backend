@@ -29,7 +29,7 @@ const addNewMotMessage = async(req, res) => {
         });
        
         console.log("new motMessage added");
-        return res.status(201).json(result);
+        return res.status(201).json({result, message: "new motMessage added"});
     } catch(error){
         console.log(error);
         return res.status(500).json({message : "Internal Server Error"});
